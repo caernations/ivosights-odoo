@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Document Views -->
+    <record id="view_project_document_list" model="ir.ui.view">
+        <field name="name">project.document.list</field>
+        <field name="model">project.document</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="task_id"/>
+                <field name="document_type"/>
+                <field name="user_id"/>
+                <field name="date_uploaded"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_project_document_form" model="ir.ui.view">
+        <field name="name">project.document.form</field>
+        <field name="model">project.document</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Document Name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="project_id"/>
+                            <field name="task_id" domain="[('project_id', '=', project_id)]"/>
+                            <field name="document_type"/>
+                            <field name="description"/>
+                        </group>
+                        <group>
+                            <field name="user_id" readonly="1"/>
+                            <field name="date_uploaded" readonly="1"/>
+                            <field name="file" filename="filename" widget="binary"/>
+                            <field name="filename" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Notes">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_project_document_search" model="ir.ui.view">
+        <field name="name">project.document.search</field>
+        <field name="model">project.document</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="task_id"/>
+                <field name="document_type"/>
+                <field name="user_id"/>
+                <filter string="My Documents" name="my_documents" domain="[('user_id','=',uid)]"/>
+                <!-- Remove any company filters to make cross-company view default -->
+                <group expand="0" string="Group By">
+                    <filter string="Project" name="group_by_project" context="{'group_by': 'project_id'}"/>
+                    <filter string="Task" name="group_by_task" context="{'group_by': 'task_id'}"/>
+                    <filter string="Document Type" name="group_by_type" context="{'group_by': 'document_type'}"/>
+                    <filter string="Uploaded By" name="group_by_user" context="{'group_by': 'user_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Add Documents tab to Project Form -->
+    <record id="view_project_form_with_documents" model="ir.ui.view">
+        <field name="name">project.project.form.documents</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Documents" name="documents">
+                    <field name="document_ids" context="{'default_project_id': id}">
+                        <list>
+                            <field name="name"/>
+                            <field name="document_type"/>
+                            <field name="task_id"/>
+                            <field name="user_id"/>
+                            <field name="date_uploaded"/>
+                        </list>
+                    </field>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+    <!-- Add Documents tab to Task Form -->
+    <record id="view_task_form_with_documents" model="ir.ui.view">
+        <field name="name">project.task.form.documents</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Documents" name="documents">
+                    <field name="document_ids" context="{'default_project_id': project_id, 'default_task_id': id}">
+                        <list>
+                            <field name="name"/>
+                            <field name="document_type"/>
+                            <field name="user_id"/>
+                            <field name="date_uploaded"/>
+                        </list>
+                    </field>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+    <!-- Actions -->
+    <record id="action_project_document" model="ir.actions.act_window">
+        <field name="name">Documents</field>
+        <field name="res_model">project.document</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_my_documents': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Upload your first document
+            </p>
+            <p>
+                Upload documents related to your projects.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menus -->
+    <menuitem id="menu_documentation_root" 
+              name="Documentation"
+              sequence="80"/>
+              
+    <menuitem id="menu_documentation_main" 
+              name="Documents"
+              parent="menu_documentation_root"
+              action="action_project_document"
+              sequence="10"/>
+</odoo>

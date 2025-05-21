@@ -1,0 +1,40 @@
+/* Project Documentation Module Custom Styles */
+
+/* Change base color to light blue (1989 Taylor Swift theme) */
+.o_main_navbar {
+    background-color: #7EB6FF !important; /* Light blue similar to 1989 album */
+}
+
+.breadcrumb-item.active, .breadcrumb-item a {
+    color: #7EB6FF !important;
+}
+
+.btn-primary, .btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+    background-color: #7EB6FF !important;
+    border-color: #5A9AE6 !important; /* Slightly darker blue for border */
+}
+
+.o_form_statusbar .o_statusbar_status button.btn-primary, 
+.o_form_statusbar .o_statusbar_status button.btn-primary.disabled {
+    background-color: #7EB6FF !important;
+}
+
+.nav-link.active, .nav-tabs .nav-link.active {
+    border-top-color: #7EB6FF !important;
+}
+
+.text-primary {
+    color: #7EB6FF !important;
+}
+
+/* Style the Documentation menu specifically */
+.o_menu_sections a[data-menu-xmlid*="project_docs.menu_documentation_root"],
+.o_menu_sections a[data-menu-xmlid*="project_docs.menu_documentation_main"] {
+    color: #5A9AE6 !important;
+    font-weight: bold;
+}
+
+/* Documentation specific elements */
+.project_docs_header {
+    border-bottom: 2px solid #7EB6FF;
+}
