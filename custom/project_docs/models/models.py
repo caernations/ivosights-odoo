@@ -14,7 +14,6 @@ class Document(models.Model):
     _name = 'project.document'
     _description = 'Project Document'
     
-    # Add this to make it shared across companies
     _check_company_auto = False
     
     name = fields.Char(string='Document Name', required=True)
@@ -25,7 +24,6 @@ class Document(models.Model):
     filename = fields.Char(string='Filename')
     date_uploaded = fields.Datetime(string='Upload Date', default=fields.Datetime.now)
     user_id = fields.Many2one('res.users', string='Uploaded By', default=lambda self: self.env.user)
-    # Add company_id field with default = False for multi-company access
     company_id = fields.Many2one('res.company', string='Company', required=False, default=False, index=True)
     document_type = fields.Selection([
         ('requirements', 'Requirements'),
@@ -36,7 +34,6 @@ class Document(models.Model):
     ], string='Document Type', default='other', required=True)
     notes = fields.Html(string='Notes')
     
-    # Override default get to avoid company auto-assignment
     @api.model
     def default_get(self, fields_list):
         res = super(Document, self).default_get(fields_list)
