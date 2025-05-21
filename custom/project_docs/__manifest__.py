@@ -3,7 +3,7 @@
     'version': '1.0',
     'summary': 'Project Documentation Management',
     'description': """
-        This module allows users to manage project documentation.
+        This modules allow the user to create or add a documentation related to the poecjt
         Features:
         - Create and organize projects
         - Upload documentation files
@@ -11,7 +11,7 @@
         - Track document history
     """,
     'category': 'Tools',
-    'author': 'Your Name',
+    'author': 'Yasmin',
     'website': '',
     'depends': ['base', 'project'],
     'data': [
