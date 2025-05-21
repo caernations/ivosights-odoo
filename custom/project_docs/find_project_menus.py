@@ -1,9 +1,5 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
 import psycopg2
 
-# Connect to the PostgreSQL database
 conn = psycopg2.connect(
     dbname="odoo18",
     user="caernations",
@@ -13,7 +9,7 @@ conn = psycopg2.connect(
 conn.autocommit = True
 cursor = conn.cursor()
 
-# Find all menus related to Project
+# Find menus
 cursor.execute("""
 SELECT m.id, m.name, d.name as external_id, m.parent_id
 FROM ir_ui_menu m
@@ -26,6 +22,5 @@ print("Project Menus:")
 for menu in cursor.fetchall():
     print(f"ID: {menu[0]}, Name: {menu[1]}, External ID: {menu[2]}, Parent ID: {menu[3]}")
 
-# Close the connection
 cursor.close()
 conn.close()
